@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+#define endl '\n'
+#define strim stringstream
+#define ll long long int
+#define inf INT_MAX
+#define negInf INT_MIN
+#define mod %
+#define find_array_max *max_element(arr.begin(), arr.end());
+#define find_array_min *min_element(arr.begin(), arr.end());
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define left_range(i, x, y) for (int i = x; i <= y; i++)
+#define right_range(i, x, y) for (int i = y; i >= x; i--)
+void hey_output()
+{
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+using namespace std;
+const int N = 1e5 + 7;
+class Node
+{
+public:
+    int val;
+    Node *left;
+    Node *right;
+    Node(int val)
+    {
+        this->val = val;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+Node *input()
+{
+    int val;
+    cin >> val;
+    Node *root;
+    if (val == -1)
+        root = nullptr;
+    else
+        root = new Node(val);
+    queue<Node *> q;
+    if (root != nullptr)
+        q.push(root);
+    while (!q.empty())
+    {
+        // 1........
+        Node *f = q.front();
+        q.pop();
+
+        // 2..........
+        int l, r;
+        cin >> l >> r;
+        Node *new_left;
+        Node *new_right;
+        if (l == -1)
+            new_left = nullptr;
+        else
+            new_left = new Node(l);
+        if (r == -1)
+            new_right = nullptr;
+        else
+            new_right = new Node(r);
+        f->left = new_left;
+        f->right = new_right;
+
+        // 3......
+        if (f->left != nullptr)
+            q.push(f->left);
+        if (f->right != nullptr)
+            q.push(f->right);
+    }
+    return root;
+}
+bool bst_search(Node *root, int x)
+{
+    if (root == nullptr)
+        return false;
+    if (root->val == x)
+        return true;
+    if (root->val > x)
+    {
+        return bst_search(root->left, x);
+    }
+    else
+    {
+        return bst_search(root->right, x);
+    }
+}
+static void go_on()
+{
+    Node *root = input();
+
+    if (bst_search(root, 10))
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    hey_output();
+    ll t = 1;
+    // cin >> t;
+    while (t--)
+    {
+        go_on();
+    }
+
+    return 0;
+}
